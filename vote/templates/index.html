@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Voting App</title>
+  <style>
+    body { font-family: -apple-system, Arial, sans-serif; background:#0b1220; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .card { background:#141b2d; padding:40px; border-radius:12px; text-align:center; min-width:320px; }
+    h1 { font-size:28px; margin-bottom: 4px; }
+    .hostname { color:#8892b0; font-size:12px; margin-bottom:24px; }
+    button { font-size:18px; padding:14px 28px; margin:8px; border:none; border-radius:8px; cursor:pointer; }
+    .a { background:#e63946; color:#fff; }
+    .b { background:#457b9d; color:#fff; }
+    .voted { margin-top:16px; color:#2ec4b6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Cats vs Dogs 🐱🐶</h1>
+    <div class="hostname">served by {{ hostname }}</div>
+    <form method="post">
+      <button class="a" name="vote" value="a" type="submit">{{ option_a }}</button>
+      <button class="b" name="vote" value="b" type="submit">{{ option_b }}</button>
+    </form>
+    {% if vote %}
+      <div class="voted">Thanks for voting {{ option_a if vote == 'a' else option_b }}!</div>
+    {% endif %}
+  </div>
+</body>
+</html>

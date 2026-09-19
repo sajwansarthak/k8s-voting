@@ -1,0 +1,25 @@
+# Argo CD Application resource — GitOps deployment of the voting app.
+#
+# IMPORTANT: repoURL must point to YOUR git repo (push this whole
+# `voting-app/` folder to a repo you own — e.g. GitHub) since Argo CD
+# pulls manifests from git, not from your local disk.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: voting-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/<your-username>/<your-repo>.git
+    targetRevision: HEAD
+    path: k8s-specifications
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Results</title>
+  <style>
+    body { font-family: -apple-system, Arial, sans-serif; background:#0b1220; color:#fff; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .card { background:#141b2d; padding:40px; border-radius:12px; min-width:420px; }
+    h1 { text-align:center; margin-bottom: 24px; }
+    .row { display:flex; align-items:center; margin-bottom:16px; }
+    .label { width:80px; }
+    .bar-bg { flex:1; background:#22304d; border-radius:6px; height:24px; overflow:hidden; margin:0 12px; }
+    .bar { height:100%; transition: width 0.4s ease; }
+    .a-bar { background:#e63946; }
+    .b-bar { background:#457b9d; }
+    .count { width:50px; text-align:right; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Live Results 🐱 vs 🐶</h1>
+    <div class="row">
+      <div class="label">Cats</div>
+      <div class="bar-bg"><div id="bar-a" class="bar a-bar" style="width:0%"></div></div>
+      <div id="count-a" class="count">0</div>
+    </div>
+    <div class="row">
+      <div class="label">Dogs</div>
+      <div class="bar-bg"><div id="bar-b" class="bar b-bar" style="width:0%"></div></div>
+      <div id="count-b" class="count">0</div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    socket.on('votes', (data) => {
+      const a = data.a || 0;
+      const b = data.b || 0;
+      const total = a + b || 1;
+      document.getElementById('count-a').textContent = a;
+      document.getElementById('count-b').textContent = b;
+      document.getElementById('bar-a').style.width = (a / total * 100) + '%';
+      document.getElementById('bar-b').style.width = (b / total * 100) + '%';
+    });
+  </script>
+</body>
+</html>
